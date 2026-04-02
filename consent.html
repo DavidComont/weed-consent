@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weed Mapping – Consent</title>
+<style>
+  /* ── Reset & Base ─────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: #f5f5f0;
+    color: #1a1a1a;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .card {
+    background: #fff;
+    max-width: 520px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 30px rgba(0,0,0,0.06);
+    padding: 32px 28px;
+    margin-top: 24px;
+    align-self: flex-start;
+  }
+
+  /* ── Header ───────────────────────────────────────── */
+  .badge {
+    display: inline-block;
+    background: #e8f0e3;
+    color: #2d6a1e;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    color: #111;
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  /* ── Info Sections ────────────────────────────────── */
+  .section {
+    border-top: 1px solid #eee;
+    padding: 18px 0;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #888;
+    margin-bottom: 8px;
+  }
+
+  .section p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  .highlight {
+    background: #f0f7ec;
+    border-left: 3px solid #4a9e2f;
+    padding: 12px 14px;
+    border-radius: 0 6px 6px 0;
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #2d5a1e;
+  }
+
+  /* ── Consent Button ───────────────────────────────── */
+  .consent-area {
+    margin-top: 28px;
+    text-align: center;
+  }
+
+  .btn-consent {
+    display: block;
+    width: 100%;
+    padding: 18px 24px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    background: #2d7a1e;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-consent:hover { background: #246618; }
+  .btn-consent:active { transform: scale(0.98); }
+  .btn-consent:disabled {
+    background: #bbb;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .fine-print {
+    margin-top: 14px;
+    font-size: 13px;
+    color: #888;
+    line-height: 1.5;
+  }
+
+  /* ── States ───────────────────────────────────────── */
+  .state { display: none; }
+  .state.active { display: block; }
+
+  .success-card {
+    text-align: center;
+    padding: 48px 28px;
+  }
+
+  .success-icon {
+    font-size: 56px;
+    margin-bottom: 16px;
+  }
+
+  .success-card h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2d7a1e;
+    margin-bottom: 8px;
+  }
+
+  .success-card p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.5;
+  }
+
+  .error-msg {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-top: 12px;
+    display: none;
+  }
+
+  .token-display {
+    font-family: monospace;
+    background: #f5f5f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    color: #666;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- ── CONSENT FORM STATE ──────────────────────── -->
+  <div id="form-state" class="state active">
+    <div class="badge">Research Participation</div>
+    <h1>Free Satellite Weed Maps for Your Fields</h1>
+    <p class="subtitle">You've been invited to take part in a data-sharing collaboration. Here's what's involved.</p>
+
+    <div class="section">
+      <div class="section-title">What we'd share</div>
+      <p>Weed distribution shapefiles from <strong>2–4 of your fields</strong> that we've already mapped. This data goes to a satellite imaging company who will use it to build better weed detection models.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">What you get back</div>
+      <div class="highlight">
+        Satellite-derived weed maps showing exactly where weed patches are across your fields, plus guidance on where you could reduce herbicide applications and save on spray costs.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Your privacy</div>
+      <p>Only geospatial weed data is shared — <strong>no personal details, no contact information, no farm business data.</strong> Your participation is identified only by an anonymous code.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Your rights</div>
+      <p>You can <strong>withdraw at any time</strong> by contacting the research team. Your data will be removed on request.</p>
+    </div>
+
+    <div class="consent-area">
+      <button class="btn-consent" id="consent-btn" onclick="submitConsent()">
+        Yes, I'm Happy to Take Part
+      </button>
+      <div class="error-msg" id="error-msg"></div>
+      <p class="fine-print">
+        By tapping the button above you confirm you've read this summary and
+        consent to your weed mapping data being shared as described.
+        <br><br>
+        Your reference: <span class="token-display" id="token-display">—</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- ── SUCCESS STATE ───────────────────────────── -->
+  <div id="success-state" class="state">
+    <div class="success-card">
+      <div class="success-icon">✓</div>
+      <h2>You're In</h2>
+      <p>Your consent has been recorded. You don't need to do anything else — we'll be in touch when your satellite weed maps are ready.</p>
+      <p style="margin-top:16px;">
+        Reference: <span class="token-display" id="token-success">—</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- ── ERROR: NO TOKEN STATE ───────────────────── -->
+  <div id="notoken-state" class="state">
+    <div class="success-card">
+      <div class="success-icon">⚠️</div>
+      <h2>Link Problem</h2>
+      <p>This consent link doesn't seem right — your participant code is missing. Please use the link you were sent, or contact the research team for a new one.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ══════════════════════════════════════════════════════════════════
+  //  CONFIGURATION — Set your Google Apps Script URL here
+  // ══════════════════════════════════════════════════════════════════
+  //
+  //  OPTION A: Google Sheets backend (recommended)
+  //  Follow the setup instructions to deploy a Google Apps Script,
+  //  then paste the web app URL below.
+  //
+  //  OPTION B: Mailto fallback
+  //  If BACKEND_URL is empty, clicking the button will open an email
+  //  to the researcher instead.
+  //
+  const BACKEND_URL = "";  // ← paste your Apps Script URL here
+  const FALLBACK_EMAIL = "your.email@university.ac.uk";
+  // ══════════════════════════════════════════════════════════════════
+
+  // Read token from URL
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get("id");
+
+  if (!token) {
+    document.getElementById("form-state").classList.remove("active");
+    document.getElementById("notoken-state").classList.add("active");
+  } else {
+    document.getElementById("token-display").textContent = token;
+    document.getElementById("token-success").textContent = token;
+  }
+
+  async function submitConsent() {
+    const btn = document.getElementById("consent-btn");
+    const errorEl = document.getElementById("error-msg");
+    errorEl.style.display = "none";
+    btn.disabled = true;
+    btn.textContent = "Recording…";
+
+    if (BACKEND_URL) {
+      // ── Option A: Google Sheets backend ──
+      try {
+        const response = await fetch(BACKEND_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token: token,
+            consent: "yes",
+            timestamp: new Date().toISOString()
+          })
+        });
+        showSuccess();
+      } catch (err) {
+        errorEl.textContent = "Something went wrong — please try again or contact the research team.";
+        errorEl.style.display = "block";
+        btn.disabled = false;
+        btn.textContent = "Yes, I'm Happy to Take Part";
+      }
+    } else {
+      // ── Option B: Mailto fallback ──
+      const subject = encodeURIComponent(`Consent: ${token}`);
+      const body = encodeURIComponent(
+        `I consent to my weed mapping data being shared as described.\n\nParticipant code: ${token}\nDate: ${new Date().toLocaleDateString()}`
+      );
+      window.location.href = `mailto:${FALLBACK_EMAIL}?subject=${subject}&body=${body}`;
+      // Brief delay then show success
+      setTimeout(showSuccess, 1500);
+    }
+  }
+
+  function showSuccess() {
+    document.getElementById("form-state").classList.remove("active");
+    document.getElementById("success-state").classList.add("active");
+  }
+</script>
+
+</body>
+</html>
